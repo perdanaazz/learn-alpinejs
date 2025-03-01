@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beranda | BeeSound</title>
+
+    <!-- Tailwind -->
+    <link rel="stylesheet" href="output.css">
+
+    <!-- Font Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+
+    <!-- Alpine JS -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body class="font-inter antialiased">
+    <main class="">
+        <!-- Navbar -->
+        <header class="mx-auto max-w-screen-2xl py-[60px] flex justify-between items-center">
+            <!-- Logo -->
+            <a href="index.html" class="text-2xl font-semibold">BeeSound</a>
+
+            <!-- Menu -->
+            <ul class="flex gap-10">
+                <li>Our Collection</li>
+                <li>New Arrivals</li>
+                <li>For Gamers</li>
+            </ul>
+
+            <!-- Icon -->
+            <div class="flex gap-3 items-center">
+                <div>
+                    <i class="fa-solid fa-cart-shopping text-2xl mr-5"></i>
+                    <i class="fa-solid fa-magnifying-glass text-2xl mr-5"></i>
+                </div>
+                <a href="" class="border rounded-full py-2 px-8 p-3 bg-brand-red block text-white">Sign In</a>
+            </div>
+        </header>
+
+        <!-- Search -->
+        <!-- X-Effect ini untuk memanggil fungsi ketika ingin mengubah data - Alpine Lifecycle -->
+        <section class="mx-auto max-w-screen-2xl mb-10" x-data="products" x-effect="searchProducts(search)">
+            <div class="mb-10">
+                <input type="search" x-model.debounce.500ms="search" name="search" id="search"
+                    placeholder="Search Product" class="w-full rounded border p-3">
+            </div>
+            <!-- Product -->
+            <div class="grid grid-cols-4 gap-10">
+                <!-- Check Error -->
+                <div class="col-span-4" x-show="error.isError" x-cloak>
+                    <h2 class="font-semibold text-red-800 text-xl">Terjadi kesalahan saat mengambil data</h2>
+                </div>
+
+                <!-- Check if data is null -->
+                <div class="col-span-4" x-show="isAvailable" x-cloak>
+                    <h2 class="font-semibold text-red-800 text-xl">Data tidak ditemukan</h2>
+                </div>
+
+                <!-- Loading -->
+                <div class="col-span-4 flex justify-center" x-show="isLoading" x-cloak>
+                    <i class="fa-solid fa-spinner text-5xl animate-spin"></i>
+                </div>
+
+                <template x-for="product in products">
+                    <!-- Grid -->
+                    <div class="card col-span-1 rounded border p-2 transition-all hover:shadow-md hover:cursor-pointer"
+                        x-show="!isLoading">
+                        <!-- Image -->
+                        <div class="mb-[20px]">
+                            <img :src="product.images[0]" alt="" class="w-full rounded h-64">
+                        </div>
+                        <!-- Body -->
+                        <div>
+                            <!-- Product Name -->
+                            <h5 class="font-semibold text-lg" x-text="product.title"></h5>
+                            <!-- Description -->
+                            <p class="py-5 truncate" x-text="product.description"></p>
+                            <!-- Price -->
+                            <div class="flex justify-between font-semibold text-lg pb-5">
+                                <p>Price</p>
+                                <span class="text-green-700">RM <span x-text="product.price"></span></span>
+                            </div>
+                            <!-- Detail Button -->
+                            <div class="flex justify-start">
+                                <a href="/" class="border bg-brand-red py-2 px-8 rounded-full text-white">Show</a>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-sky-50 py-10">
+            <div class="mx-auto max-w-screen-2xl">
+                <div class="grid grid-cols-4 gap-10">
+                    <div class="col-span-1">
+                        <h3 class="text-xl font-semibold">BeeSound</h3>
+                        <p class="py-4">
+                            BeeSound is the one of the world’s largest online shops that providing over 1500 headphones
+                            for
+                            its
+                            costumers from over 80 countries
+                        </p>
+                        <div class="text-xl">
+                            <i class="fa-brands fa-instagram mr-4"></i>
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </div>
+                    </div>
+                    <div class="col-span-1">
+                        <h3 class="text-2xl font-semibold">Side Map</h3>
+                        <ul class="my-3">
+                            <li>About Us</li>
+                            <li>Contact Us</li>
+                            <li>FAQ's</li>
+                            <li>Customer Services</li>
+                        </ul>
+                    </div>
+                    <div class="col-span-1">
+                        <h3 class="text-2xl font-semibold">Products</h3>
+                        <ul class="my-3">
+                            <li>Headphones</li>
+                            <li>Speakers</li>
+                        </ul>
+                    </div>
+                    <div class="col-span-1">
+                        <h3 class="text-2xl font-semibold">Subscription</h3>
+                        <form action="">
+                            <input type="email" name="email" id="email"
+                                class="w-full py-2 px-8 rounded border mt-[30px] mb-[20px]"
+                                placeholder="Enter your email">
+                            <button type="submit" class="rounded-full border bg-blue-950 px-8 py-2 text-white">Submit
+                                your email</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
